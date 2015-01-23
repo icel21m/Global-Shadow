@@ -28,10 +28,11 @@
             <string>///Initialize Variables
 hsp = 0;
 vsp = 0;
-maxSpeed = 10;
-moveSpeed = 0.4;
+maxSpeed = 4;
+moveSpeed = 0.7;
 directionSpeed = 5;
 backwardModifier = 0.5;
+maxGravity = 0.5;
 </string>
           </argument>
         </arguments>
@@ -90,11 +91,27 @@ if (key_S-key_W != 0)
 gravDirection = point_direction(x,y,obj_Ast1.x,obj_Ast1.y);
 distance = distance_to_object(obj_Ast1);
 
-if (distance != 0)
+
+if (distance &gt; 0)
 {
-    hsp += sin(gravDirection)*obj_Ast1.mass/power(distance, 2);
-    vsp += cos(gravDirection)*obj_Ast1.mass/power(distance, 2);
+    if (cos(gravDirection*pi/180) !=0)
+        gravX = obj_Ast1.mass/power(distance*cos(gravDirection*pi/180), 2);
+    if (sin(gravDirection*pi/180) !=0)
+        gravY = obj_Ast1.mass/power(distance*sin(gravDirection*pi/180), 2);
+    if (gravX &gt; maxGravity)
+        gravX = maxGravity;
+    if (gravY &gt; maxGravity)
+        gravY = maxGravity;
+        
+    gravX = abs(0.6*cos(gravDirection*pi/180)/distance);
+    gravY = abs(0.6*sin(gravDirection*pi/180)/distance);
 }
+
+
+
+hsp += sign(cos(gravDirection*pi/180))*gravX;
+vsp -= sign(sin(gravDirection*pi/180))*gravY;
+
 /*
 if (abs(obj_Ast1.x-x) &gt; 2)
 {
@@ -113,6 +130,7 @@ if (vsp &gt; maxSpeed)
     vsp = maxSpeed;
 else if (vsp &lt; -maxSpeed)
     vsp = -maxSpeed;
+
 
 x += hsp;
 y += vsp;

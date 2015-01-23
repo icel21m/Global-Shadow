@@ -8,9 +8,11 @@
   <sprites name="sprites">
     <sprite>sprites\sp_Player_Walk</sprite>
     <sprite>sprites\sp_Ast1</sprite>
+    <sprite>sprites\sprite2</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg_Black</background>
+    <background>background\bg_Stars</background>
   </backgrounds>
   <paths name="paths"/>
   <objects name="objects">
